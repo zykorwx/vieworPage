@@ -5,13 +5,13 @@
 import os
 RUTA_PROYECTO = os.path.dirname(os.path.realpath(__file__))
 
-
+DAJAXICE_MEDIA_PREFIX="dajaxice"
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('zykor', 'enrique.wx@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -79,6 +79,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'dajaxice.finders.DajaxiceFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
@@ -89,7 +90,7 @@ SECRET_KEY = 'cx0i)*oe@^h8zlm=3mvw3w&amp;l%+4%$!0hlmgr=k8c*-s9@uahf1'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -102,13 +103,29 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.contrib.messages.context_processors.messages',
+    'social_auth.context_processors.social_auth_by_name_backends',
+    'social_auth.context_processors.social_auth_backends',
+    'social_auth.context_processors.social_auth_by_type_backends',
+    'social_auth.context_processors.social_auth_login_redirect',
+)
+
+
 ROOT_URLCONF = 'vieworPage.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'vieworPage.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(RUTA_PROYECTO,'plantillas'),
+    os.path.join(RUTA_PROYECTO,'templates'),
 )
 
 INSTALLED_APPS = (
@@ -122,6 +139,10 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'south',
     'disqus',
+    'principal',
+    'dajaxice',
+    'dajax',
+    'social_auth',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -155,3 +176,31 @@ LOGGING = {
 
 DISQUS_API_KEY = 'kaJz3KB2ToQ9zh0VVCQkWCsD1OE2a6rJ6yjYHoShxxc9F4QeAFEDBPaWES0IVUP2'
 DISQUS_WEBSITE_SHORTNAME = 'mangest'
+
+# Registro y login configuraciones
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'django.contrib.auth.backends.ModelBackend',
+    )
+# Apis keys
+TWITTER_CONSUMER_KEY         = 'CtfnQEbeggFbyqQRM53cw'
+TWITTER_CONSUMER_SECRET      = 'THZhFvFMVN8iYPdVcLAT9Ig2AwvBrrQTLNjj8PJkD4'
+FACEBOOK_APP_ID              = '306615159417586'
+FACEBOOK_API_SECRET          = 'a0c086778c72d8fc8c57adfc3b850dde'
+GOOGLE_OAUTH2_CLIENT_ID      = '156687870178.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET  = 'EfwPolT8ry4lCt7PfTrpUtSJ'
+
+# Reconfigurando urls
+LOGIN_URL          = '/login-form/'
+LOGIN_REDIRECT_URL = '/logged-in/'
+LOGIN_ERROR_URL    = '/login-error/'
+
+# Para que despues se cambien los urls
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+
+# nombre por default?
+SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
+
