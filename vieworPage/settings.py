@@ -37,7 +37,7 @@ TIME_ZONE = 'America/Mexico_City'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'es-Mx'
 
-SITE_ID = 1
+SITE_ID = 2
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -112,10 +112,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
-    'social_auth.context_processors.social_auth_by_name_backends',
-    'social_auth.context_processors.social_auth_backends',
-    'social_auth.context_processors.social_auth_by_type_backends',
-    'social_auth.context_processors.social_auth_login_redirect',
+    "django.core.context_processors.request",
+    'allauth.account.context_processors.account',
+    'allauth.socialaccount.context_processors.socialaccount',
 )
 
 
@@ -142,7 +141,12 @@ INSTALLED_APPS = (
     'principal',
     'dajaxice',
     'dajax',
-    'social_auth',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -179,28 +183,13 @@ DISQUS_WEBSITE_SHORTNAME = 'mangest'
 
 # Registro y login configuraciones
 AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
+    # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+
     )
-# Apis keys
-TWITTER_CONSUMER_KEY         = 'CtfnQEbeggFbyqQRM53cw'
-TWITTER_CONSUMER_SECRET      = 'THZhFvFMVN8iYPdVcLAT9Ig2AwvBrrQTLNjj8PJkD4'
-FACEBOOK_APP_ID              = '306615159417586'
-FACEBOOK_API_SECRET          = 'a0c086778c72d8fc8c57adfc3b850dde'
-GOOGLE_OAUTH2_CLIENT_ID      = '156687870178.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET  = 'EfwPolT8ry4lCt7PfTrpUtSJ'
 
-# Reconfigurando urls
-LOGIN_URL          = '/login-form/'
-LOGIN_REDIRECT_URL = '/logged-in/'
-LOGIN_ERROR_URL    = '/login-error/'
 
-# Para que despues se cambien los urls
-SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
-SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 
-# nombre por default?
-SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
 

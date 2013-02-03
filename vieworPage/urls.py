@@ -18,8 +18,8 @@ urlpatterns = patterns('',
     url(r'^$','principal.views.index'),
     # Dajaxice
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
-    # Social-Auth
-    url(r'', include('social_auth.urls')),
+    # django-allauth
+    (r'^accounts/', include('allauth.urls')),
 )
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
